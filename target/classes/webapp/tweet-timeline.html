@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title>tweet-timeline</title>
+</head>
+<body>
+<script>
+tweetIt = function() {
+    var msg = document.getElementById("tweet_msg").value;
+	var socket = new WebSocket('ws://localhost:9090/tweet-timeline');
+	socket.onopen = function(event) {
+  		console.log('open');
+  		socket.send(msg);
+	};
+	socket.onerror = function(error) {
+  		console.log('WebSocket Error: ' + error);
+	};
+};
+</script>
+<br>
+<br>
+<input type="text" id="tweet_msg" value="Test Tweet">
+<button onclick="tweetIt()">Tweet It</button>
+<br>
+<br>
+<a href='index.html'>Back to Home</a>
+</body>
+</html>

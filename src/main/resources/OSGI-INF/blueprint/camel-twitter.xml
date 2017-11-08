@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="
+           http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+<camelContext id="camel-assign2" xmlns="http://camel.apache.org/schema/blueprint">
+    <propertyPlaceholder id="placeholder" location="classpath:twitter.properties"/>
+
+
+<route id="twitter-search">
+	<from uri="twitter://search?type=polling&amp;keywords=spacex&amp;delay=600&amp;accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+	<to uri="websocket://localhost:9090/tweet-search?sendToAll=true&amp;staticResources=classpath:webapp"/>
+</route>
+
+<route id="streaming-sample">
+    <from uri="twitter://streaming/sample?type=polling&amp;accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+    <to uri="log:tweet"/>
+    <to uri="websocket://localhost:9090/streaming-sample?sendToAll=true&amp;staticResources=classpath:webapp"/>
+</route>
+
+<route id="streaming-filter">
+    <from uri="twitter://streaming/filter?type=polling&amp;keywords=cisco&amp;accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+    <to uri="log:tweet"/>
+    <to uri="websocket://localhost:9090/streaming-filter?sendToAll=true&amp;staticResources=classpath:webapp"/>
+</route>
+
+<route id="retweets-of-me">
+    <from uri="twitter://timeline/retweetsofme?type=polling&amp;delay=60000&amp;accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+    <to uri="log:tweet"/>
+    <to uri="websocket://localhost:9090/retweetsofme?sendToAll=true&amp;staticResources=classpath:webapp"/>
+</route>
+
+<route id="timeline-home">
+    <from uri="twitter://timeline/home?type=polling&amp;delay=60000&amp;accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+    <to uri="log:tweet"/>
+    <to uri="websocket://localhost:9090/timeline-home?sendToAll=true&amp;staticResources=classpath:webapp"/>
+</route>
+
+<route id="timeline-mentions">
+    <from uri="twitter://timeline/mentions?type=polling&amp;delay=600&amp;accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+    <to uri="log:tweet"/>
+    <to uri="websocket://localhost:9090/timeline-mentions?sendToAll=true&amp;staticResources=classpath:webapp"/>
+</route>
+
+<route id="timeline-user">
+    <from uri="twitter://timeline/user?user=Rajitha68527614&amp;type=polling&amp;accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+    <to uri="log:tweet"/>
+    <to uri="websocket://localhost:9090/timeline-user?sendToAll=true&amp;staticResources=classpath:webapp"/>
+</route>
+
+
+<route id="tweet-timeline">
+<from uri="websocket://localhost:9090/tweet-timeline" />
+<to uri="log:tweet"/>
+<to uri="twitter://timeline/user?accessToken={{access.token}}&amp;accessTokenSecret={{access.token-secret}}&amp;consumerKey={{consumer.key}}&amp;consumerSecret={{consumer.secret}}"/>
+</route>
+
+</camelContext>
+</blueprint>

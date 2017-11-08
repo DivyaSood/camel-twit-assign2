@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+    <groupId>com.sjsu.teamspark</groupId>
+    <version>2.44</version>
+  <artifactId>camel-twit-assign2</artifactId>
+  <name>camel-twit-assign2</name>
+  <description>Assignment2</description>
+  <packaging>jar</packaging>
+
+  <properties>
+    <category>Social</category>
+
+    <camel.osgi.import.pkg>
+      *
+    </camel.osgi.import.pkg>
+    <camel.osgi.export.pkg>
+      *
+    </camel.osgi.export.pkg>
+  </properties>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <outputDirectory>/home/makalapp/Downloads/apache-karaf-4.1.2/deploy</outputDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+ 
+</project>
